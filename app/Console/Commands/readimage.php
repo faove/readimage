@@ -56,13 +56,16 @@ class readimage extends Command
 
         if (preg_match('/[\\S ]*\\.pdf$/', $file)){
 
-            exec("convert -density 300 {$file} -depth 8 -strip -background white -alpha off {$filejpg}", $outputArray);
-            
+            exec("convert -density 300 {$file} -depth 8 -strip -background white -alpha off {$filejpg}");
+            // passthru("convert -density 300 {$file} -depth 8 -strip -background white -alpha off {$filejpg}", $array, $error);
+            // $result = exec("convert -density 300 {$file} -depth 8 -strip -background white -alpha off {$filejpg}",$array);
+            // $resultado = shell_exec("convert -density 300 {$file} -depth 8 -strip -background white -alpha off {$filejpg}");
             // $result_array=explode(' ',$result);
-            // dd($result_array);
-            dump($outputArray[0]);
+            // dump($error);
+            // dump($array);
+            // dd($resultado);
             // dd($output);
-            foreach ($outputArray as $item) { // <------
+            foreach ($out as $item) { // <------
                 print $item . "<br />";
             }
             // foreach ($filejpg as $out){
