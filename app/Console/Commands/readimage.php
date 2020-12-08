@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use thiagoalessio\TesseractOCR\TesseractOCR;
+use Illuminate\Support\Str;
+use Imagick;
 
 class readimage extends Command
 {
@@ -39,15 +41,57 @@ class readimage extends Command
     public function handle()
     {
         require_once "vendor/autoload.php";
-        echo (new TesseractOCR('/home/falvarez/Documents/keydata/frases.png'))->run();
-        dump('hola');
-        $ocr = new TesseractOCR();
-        dump($ocr);
-        $ocr->image('/home/falvarez/Documents/keydata/frases.png');
-        dump($ocr);
+        dump('Inicio--------------------');
+
+        $outputArray = array();
+
+        // $file = '/home/falvarez/Documents/keydata/FACTURAS PARA SMART/AUVIMER SALUD INTEGRAL EN CASA S A S/0014702246_AUVIMER SALUD INTEGRAL EN CASA S A S.pdf';
+        $file = '/home/falvarez/KeyData/SALUD.pdf';
+
+        $filejpg = '/home/falvarez/KeyData/out.jpg';
+
+        // $stream = file_get_contents($file);
+        // dump($file->getRealPath());
+        $pathToImage = '/home/falvarez/Documents/keydata/';
+
+        if (preg_match('/[\\S ]*\\.pdf$/', $file)){
+
+            exec("convert -density 300 {$file} -depth 8 -strip -background white -alpha off {$filejpg}", $outputArray);
+            
+            // $result_array=explode(' ',$result);
+            // dd($result_array);
+            dump($outputArray[0]);
+            // dd($output);
+            foreach ($outputArray as $item) { // <------
+                print $item . "<br />";
+            }
+            // foreach ($filejpg as $out){
+            //     dd($out[0]);
+            // }
+            
+            //echo (new TesseractOCR($filejpg))->run();
+            //dd($file);
+        }
         
-        $ocr->run();
-        dd($ocr);
+        
+        
+        // $imagick = new Imagick($file);
+
+        // $imagick->setImageFormat('jpg');
+
+        // $fileimage = file_put_contents($pathToImage, $imagick);
+
+        // dump($fileimage);
+        
+        
+        dump('hola');
+        // $ocr = new TesseractOCR();
+        // dump($ocr);
+        // $ocr->image('/home/falvarez/Documents/keydata/frases.png');
+        // dump($ocr);
+        
+        // $ocr->run();
+        // dump($ocr);
         //return 0;
     }
 }
